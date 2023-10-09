@@ -22,6 +22,8 @@ app.use(morgan('dev'));
 // Middleware para leer body en formato form-data
 app.use(fileUpload());
 
+app.use(express.static('static'));
+
 /*
   #############################
   ### Imports Controladores ###
