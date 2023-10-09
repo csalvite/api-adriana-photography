@@ -28,7 +28,7 @@ app.use(fileUpload());
   #############################
 */
 
-const { GetPhotosController } = require('./controllers');
+const { GetPhotosController, SavePhotos } = require('./controllers');
 
 /*
   #################
@@ -43,7 +43,11 @@ app.get('/', (req, res) => {
   });
 });
 
+// Obtener las fotos para la página de muestra
 app.get('/photos', GetPhotosController);
+
+// Guardar nuevas fotos en el servidor
+app.post('/photos/new', SavePhotos);
 
 /*
   #####################################
