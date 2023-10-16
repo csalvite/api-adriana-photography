@@ -30,7 +30,13 @@ app.use(express.static('static'));
   #############################
 */
 
-const { GetPhotosController, SavePhotos } = require('./controllers');
+const {
+  GetPhotosController,
+  SavePhotos,
+  SaveVideo,
+  GetVideosController,
+  SetVideoImageBackgroundController,
+} = require('./controllers');
 
 /*
   #################
@@ -41,7 +47,7 @@ const { GetPhotosController, SavePhotos } = require('./controllers');
 app.get('/', (req, res) => {
   res.send({
     status: 'Ok',
-    message: '¡Petición recibida con éxito!',
+    message: '¡Servidor a la escucha!',
   });
 });
 
@@ -50,6 +56,15 @@ app.get('/photos', GetPhotosController);
 
 // Guardar nuevas fotos en el servidor
 app.post('/photos/new', SavePhotos);
+
+// Guarda url del video en nuestra bbdd
+app.post('/videos', SaveVideo);
+
+// Obtiene todos los videos
+app.get('/videos', GetVideosController);
+
+// Añade imagenes para el background de los videos
+app.post('/videos/image', SetVideoImageBackgroundController);
 
 /*
   #####################################

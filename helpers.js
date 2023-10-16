@@ -46,7 +46,38 @@ async function savePhoto(image, collection) {
   }
 }
 
+async function savePhotoVideoBackground(image) {
+  try {
+    // Convertimos la imagen en un objeto sharp
+    const sharpImage = sharp(image.data).jpeg({ quality: 50 });
+
+    // Generamos un nombre único para la imagen
+    const imageName = uuid.v4() + '.jpg';
+
+    // Según la colección seleccionada ubicaremos el directorio en el cual se guardará
+    let imageDirectory = path.join(
+      __dirname,
+      UPLOADS_DIRECTORY,
+      'video-images'
+    );
+
+    ensureDir(imageDirectory);
+
+    const saveDirectory = path.join(imageDirectory, imageName);
+
+    // Guardamos la imagen
+    await sharpImage.toFile(saveDirectory);
+
+    // Retornamos el nombre "encriptado" de la imagen para guardarlo en base de datos
+    return imageName;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Error al procesar la imagen');
+  }
+}
+
 module.exports = {
   generateError,
   savePhoto,
+  savePhotoVideoBackground,
 };
