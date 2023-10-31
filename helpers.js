@@ -55,7 +55,7 @@ async function savePhoto(image, collection) {
 async function savePhotoVideoBackground(image) {
   try {
     // Convertimos la imagen en un objeto sharp
-    const sharpImage = sharp(image.data).jpeg({ quality: 50 });
+    const sharpImage = sharp(image.data); // .jpeg({ quality: 50 })
 
     // Generamos un nombre único para la imagen
     const imageName = uuid.v4() + '.jpg';
