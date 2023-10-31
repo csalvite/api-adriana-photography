@@ -10,6 +10,7 @@ async function main() {
     await connection.query('DROP TABLE IF EXISTS photos');
     await connection.query('DROP TABLE IF EXISTS videophotos');
     await connection.query('DROP TABLE IF EXISTS videos');
+    await connection.query('DROP TABLE IF EXISTS user');
     console.log('Tablas eliminadas...');
 
     // Creamos las tablas
@@ -37,6 +38,17 @@ async function main() {
         photo VARCHAR(255) NOT NULL,
         idVideo INT UNSIGNED NOT NULL,
         FOREIGN KEY (idVideo) REFERENCES videos(id)
+      )`
+    );
+
+    await connection.query(
+      `CREATE TABLE IF NOT EXISTS user (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        username VARCHAR(30) UNIQUE NOT NULL,
+        name VARCHAR(30) NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        registrationCode VARCHAR(100),
+        createdAt DATETIME NOT NULL
       )`
     );
 

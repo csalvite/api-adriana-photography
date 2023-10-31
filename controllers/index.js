@@ -3,6 +3,8 @@ const GetVideosController = require('./GetVideosController');
 const SavePhotos = require('./SavePhotos');
 const SaveVideo = require('./SaveVideo');
 const SetVideoImageBackgroundController = require('./SetVideoImageBackgroundController');
+const loginUser = require('./loginUser');
+const newUser = require('./newUser');
 
 module.exports = {
   GetPhotosController,
@@ -10,4 +12,6 @@ module.exports = {
   SaveVideo,
   GetVideosController,
   SetVideoImageBackgroundController,
+  loginUser,
+  newUser,
 };

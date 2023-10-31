@@ -34,12 +34,20 @@ const SaveVideo = async (req, res, next) => {
       [urlVideo, title]
     );
 
+    const [idVideo] = await connection.query(
+      `select id from videos where urlVideo = ?`,
+      [urlVideo]
+    );
+
     res.send({
       status: 'ok',
       message: '¡Video guardado con éxito!',
+      idVideo: idVideo[0].id,
     });
   } catch (error) {
     next(error);
+  } finally {
+    if (connection) connection.release();
   }
 };
 

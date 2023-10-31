@@ -2,6 +2,7 @@ const { unlink, ensureDir } = require('fs-extra');
 const path = require('path');
 const sharp = require('sharp');
 const uuid = require('uuid');
+const crypto = require('crypto');
 
 const { UPLOADS_DIRECTORY } = process.env;
 
@@ -10,6 +11,11 @@ function generateError(message, code) {
   const error = new Error(message);
   error.httpStatus = code;
   return error;
+}
+
+// Genera un string random para encriptar la contraseña
+function generateRandomString(leght) {
+  return crypto.randomBytes(leght).toString('hex');
 }
 
 // Funcion para insertar nuevas fotos
@@ -80,4 +86,5 @@ module.exports = {
   generateError,
   savePhoto,
   savePhotoVideoBackground,
+  generateRandomString,
 };

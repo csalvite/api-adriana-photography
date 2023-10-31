@@ -47,6 +47,8 @@ const SetVideoImageBackgroundController = async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  } finally {
+    if (connection) connection.release();
   }
 };
 
