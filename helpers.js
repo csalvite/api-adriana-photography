@@ -22,14 +22,7 @@ function generateRandomString(leght) {
 async function savePhoto(image, collection) {
   try {
     // Convertimos la imagen en un objeto sharp
-    const sharpImage = sharp(image.data).jpeg({ quality: 50 });
-
-    // Creamos la variable que guardara la ruta absoluta al directorio donde guardaremos la imagen dependiendo si es
-    // de avatar o de producto
-
-    // const processedImage = await sharpImage
-    //   .jpeg({ quality: 70 }) // Ajuste la calidad JPEG según sus necesidades
-    //   .toBuffer();
+    const sharpImage = sharp(image.data);
 
     // Generamos un nombre único para la imagen
     const imageName = uuid.v4() + '.jpg';

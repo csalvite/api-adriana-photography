@@ -8,6 +8,7 @@ async function main() {
 
     // Eliminamos las tablas si existen
     await connection.query('DROP TABLE IF EXISTS photos');
+    await connection.query('DROP TABLE IF EXISTS collections');
     await connection.query('DROP TABLE IF EXISTS videophotos');
     await connection.query('DROP TABLE IF EXISTS videos');
     await connection.query('DROP TABLE IF EXISTS user');
@@ -17,10 +18,19 @@ async function main() {
     console.log('Creando tablas...');
 
     await connection.query(
+      `CREATE TABLE IF NOT EXISTS collections (
+        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+        collection VARCHAR(200) NOT NULL,
+        title VARCHAR(200),
+        description VARCHAR(500)
+      )`
+    );
+
+    await connection.query(
       `CREATE TABLE IF NOT EXISTS photos(
           id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
           name VARCHAR(255) NOT NULL,
-          collection VARCHAR(200) NOT NULL
+          idCollection INT UNSIGNED NOT NULL
       )`
     );
 
@@ -28,7 +38,8 @@ async function main() {
       `CREATE TABLE IF NOT EXISTS videos (
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         urlVideo VARCHAR(255) NOT NULL,
-        title VARCHAR(500)
+        title VARCHAR(500),
+        description VARCHAR(500)
       )`
     );
 

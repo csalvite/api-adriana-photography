@@ -6,27 +6,23 @@ const GetPhotosController = async (req, res, next) => {
   try {
     connection = await getDB();
 
-    const [data] = await connection.query(`select * from photos`);
+    const [data] = await connection.query(`select * from collections`);
 
-    // agrupamos las imágenes según la categoria a la que pertenecen y las devolvemos
-    const groupedData = data.reduce((acc, item) => {
-      const { collection } = item;
-
-      // Si la colección ya existe en el resultado, agregamos el elemento a su array
-      if (acc[collection]) {
-        acc[collection].push(item);
-      } else {
-        // Si no existe, creamos un nuevo array con el elemento
-        acc[collection] = [item];
-      }
-
-      return acc;
-    }, {});
+    const result = [];
+    // Por cada colección hacemos una peticion a la tabla de photos
+    for (const collection of data) {
+      const [photos] = await connection.query(
+        `select * from photos where idCollection = ?`,
+        [collection.id]
+      );
+      //result[collection.collection] = photos;
+      result.push({ ...collection, photos: photos });
+    }
 
     res.send({
       status: 'Ok',
       message: 'Ahi van las fotooooos',
-      data: groupedData,
+      data: result,
     });
   } catch (error) {
     next(error);
