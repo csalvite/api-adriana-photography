@@ -2,7 +2,8 @@ require('dotenv').config();
 const mysql = require('mysql2/promise');
 
 // importamos las variables de entorno necesarias para la conexion
-const { MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE } = process.env;
+const { MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE, MYSQL_DBPORT } =
+  process.env;
 
 const getDB = async () => {
   let pool;
@@ -16,6 +17,7 @@ const getDB = async () => {
         user: MYSQL_USER,
         password: MYSQL_PASSWORD,
         database: MYSQL_DATABASE,
+        port: MYSQL_DBPORT,
         timezone: 'Z',
       });
 
