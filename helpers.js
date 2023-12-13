@@ -2,6 +2,7 @@ const { unlink, ensureDir } = require('fs-extra');
 const path = require('path');
 const sharp = require('sharp');
 const uuid = require('uuid');
+const crypto = require('crypto');
 
 const { UPLOADS_DIRECTORY } = process.env;
 
@@ -12,18 +13,16 @@ function generateError(message, code) {
   return error;
 }
 
+// Genera un string random para encriptar la contraseña
+function generateRandomString(leght) {
+  return crypto.randomBytes(leght).toString('hex');
+}
+
 // Funcion para insertar nuevas fotos
 async function savePhoto(image, collection) {
   try {
     // Convertimos la imagen en un objeto sharp
-    const sharpImage = sharp(image.data).jpeg({ quality: 50 });
-
-    // Creamos la variable que guardara la ruta absoluta al directorio donde guardaremos la imagen dependiendo si es
-    // de avatar o de producto
-
-    // const processedImage = await sharpImage
-    //   .jpeg({ quality: 70 }) // Ajuste la calidad JPEG según sus necesidades
-    //   .toBuffer();
+    const sharpImage = sharp(image.data);
 
     // Generamos un nombre único para la imagen
     const imageName = uuid.v4() + '.jpg';
@@ -80,4 +79,5 @@ module.exports = {
   generateError,
   savePhoto,
   savePhotoVideoBackground,
+  generateRandomString,
 };

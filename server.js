@@ -35,8 +35,12 @@ const {
   SavePhotos,
   SaveVideo,
   GetVideosController,
-  SetVideoImageBackgroundController,
+  loginUser,
+  newUser,
+  GetCategories,
 } = require('./controllers');
+
+const isAuth = require('./middlewares/isAuth');
 
 /*
   #################
@@ -51,20 +55,26 @@ app.get('/', (req, res) => {
   });
 });
 
+// Crea un nuevo usuario
+app.post('/new', newUser);
+
+// Acceder a la web como admin
+app.post('/acceso', loginUser);
+
 // Obtener las fotos para la página de muestra
 app.get('/photos', GetPhotosController);
 
+// Obtiene una lista de las categorias de photos
+app.get('/categories', GetCategories);
+
 // Guardar nuevas fotos en el servidor
-app.post('/photos/new', SavePhotos);
+app.post('/photos/new', isAuth, SavePhotos);
 
 // Guarda url del video en nuestra bbdd
-app.post('/videos', SaveVideo);
+app.post('/videos', isAuth, SaveVideo);
 
 // Obtiene todos los videos
 app.get('/videos', GetVideosController);
-
-// Añade imagenes para el background de los videos
-app.post('/videos/image', SetVideoImageBackgroundController);
 
 /*
   #####################################

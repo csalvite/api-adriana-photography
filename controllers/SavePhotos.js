@@ -7,7 +7,30 @@ const SavePhotos = async (req, res, next) => {
   try {
     connection = await getDB();
 
-    const { collection } = req.query;
+    const { idCollection } = req.query;
+
+    const { nameCollection, title, description } = req.body;
+
+    let [data] = await connection.query(
+      `select * from collections where collection = ?`,
+      [nameCollection]
+    );
+
+    // Si no existe la coleccion la creamos
+    if (data.length < 1) {
+      // Guardamos la colección en la bbdd y devolvemos su id
+      await connection.query(
+        `INSERT INTO collections (collection, title, description)
+        VALUES (?, ?, ?)`,
+        [nameCollection, title, description]
+      );
+
+      // Recuperamos el id de la coleccion
+      [data] = await connection.query(
+        `select * from collections where collection = ?`,
+        [nameCollection]
+      );
+    }
 
     // Si no indica la nueva foto de producto, lanzamos un error
     if (!req.files || !req.files.photos) {
@@ -21,23 +44,23 @@ const SavePhotos = async (req, res, next) => {
     if (req.files.photos?.length > 0) {
       // Si es más de una las recorremos y guardamos
       for (const photo of req.files.photos) {
-        const photoName = await savePhoto(photo, collection); // indicamos la coleccion a la que pertenece
+        const photoName = await savePhoto(photo, data[0].collection); // indicamos la coleccion a la que pertenece
 
         // insertamos referencia en bbdd
         await connection.query(
-          `INSERT INTO photos (name, collection)
+          `INSERT INTO photos (name, idCollection)
             VALUES (?, ?)`,
-          [photoName, collection]
+          [photoName, data[0].id]
         );
       }
     } else {
       // Si es una única foto
-      const photoName = await savePhoto(req.files.photos, collection);
+      const photoName = await savePhoto(req.files.photos, data[0].collection);
 
       await connection.query(
-        `INSERT INTO photos (name, collection)
+        `INSERT INTO photos (name, idCollection)
             VALUES (?, ?)`,
-        [photoName, collection]
+        [photoName, data[0].id]
       );
     }
 
@@ -47,6 +70,8 @@ const SavePhotos = async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  } finally {
+    if (connection) connection.release();
   }
 };
 
