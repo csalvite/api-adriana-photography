@@ -11,11 +11,5 @@
         "src": "/(.*)",
         "dest": "/"
     }
-   ],
-   "functions": {
-    "api/*": {
-      "runtime": "vercel-node@2",
-      "maxHttpBufferSize": "50MB"
-    }
-  }
+   ]
 }

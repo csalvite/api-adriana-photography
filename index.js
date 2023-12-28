@@ -24,6 +24,9 @@ app.use(fileUpload());
 
 app.use(express.static('static'));
 
+// Configurar el límite de carga del cuerpo a 50 megabytes
+app.use(express.json({ limit: '50mb' }));
+
 /*
   #############################
   ### Imports Controladores ###
