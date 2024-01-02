@@ -1,4 +1,5 @@
 const { unlink, ensureDir } = require('fs-extra');
+const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 const uuid = require('uuid');
