@@ -28,11 +28,12 @@ async function savePhoto(image, collection) {
     const imageName = uuid.v4() + '.jpg';
 
     // Según la colección seleccionada ubicaremos el directorio en el cual se guardará
-    let imageDirectory = path.join(__dirname, UPLOADS_DIRECTORY, collection);
+    // let imageDirectory = path.join(__dirname, UPLOADS_DIRECTORY, collection);
 
-    ensureDir(imageDirectory);
+    // ensureDir(imageDirectory);
 
-    const saveDirectory = path.join(imageDirectory, imageName);
+    // const saveDirectory = path.join(imageDirectory, imageName);
+    const saveDirectory = `./static/${collection}/${imageName}`;
 
     // Guardamos la imagen
     await sharpImage.toFile(saveDirectory);
@@ -62,15 +63,16 @@ async function savePhotoVideoBackground(image) {
     const imageName = uuid.v4() + '.jpg';
 
     // Según la colección seleccionada ubicaremos el directorio en el cual se guardará
-    let imageDirectory = path.join(
-      __dirname,
-      UPLOADS_DIRECTORY,
-      'video-images'
-    );
+    // let imageDirectory = path.join(
+    //   __dirname,
+    //   UPLOADS_DIRECTORY,
+    //   'video-images'
+    // );
 
-    ensureDir(imageDirectory);
+    // ensureDir(imageDirectory);
 
-    const saveDirectory = path.join(imageDirectory, imageName);
+    // const saveDirectory = path.join(imageDirectory, imageName);
+    const saveDirectory = './static/video-images' + imageName;
 
     // Guardamos la imagen
     await sharpImage.toFile(saveDirectory);
