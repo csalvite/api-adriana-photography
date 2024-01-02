@@ -21,6 +21,14 @@ function generateRandomString(leght) {
 // Funcion para insertar nuevas fotos
 async function savePhoto(image, collection) {
   try {
+    // Comprobamos que el directorio static existe
+    const staticDir = path.join(__dirname, 'static');
+    // Verificar si el directorio existe
+    if (!fs.existsSync(staticDir)) {
+      // Crear el directorio si no existe
+      fs.mkdirSync(staticDir, { recursive: true });
+    }
+
     // Convertimos la imagen en un objeto sharp
     const sharpImage = sharp(image.data);
 
@@ -29,11 +37,11 @@ async function savePhoto(image, collection) {
 
     // Según la colección seleccionada ubicaremos el directorio en el cual se guardará
     // let imageDirectory = path.join(__dirname, UPLOADS_DIRECTORY, collection);
+    let imageDirectory = path.join(staticDir, collection);
 
-    // ensureDir(imageDirectory);
+    ensureDir(imageDirectory);
 
-    // const saveDirectory = path.join(imageDirectory, imageName);
-    const saveDirectory = `./static/${collection}/${imageName}`;
+    const saveDirectory = path.join(imageDirectory, imageName);
 
     // Guardamos la imagen
     await sharpImage.toFile(saveDirectory);
