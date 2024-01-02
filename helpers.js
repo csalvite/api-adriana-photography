@@ -47,6 +47,14 @@ async function savePhoto(image, collection) {
 
 async function savePhotoVideoBackground(image) {
   try {
+    // Comprobamos que el directorio static existe
+    const staticDir = path.join(__dirname, 'static');
+    // Verificar si el directorio existe
+    if (!fs.existsSync(staticDir)) {
+      // Crear el directorio si no existe
+      fs.mkdirSync(staticDir, { recursive: true });
+    }
+
     // Convertimos la imagen en un objeto sharp
     const sharpImage = sharp(image.data); // .jpeg({ quality: 50 })
 
