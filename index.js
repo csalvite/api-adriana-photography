@@ -3,6 +3,7 @@ const morgan = require('morgan');
 require('dotenv').config();
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
+const bodyParser = require('body-parser');
 
 // Creamos servidor express
 const app = express();
@@ -25,7 +26,11 @@ app.use(fileUpload());
 app.use(express.static('static'));
 
 // Configurar el límite de carga del cuerpo a 50 megabytes
-app.use(express.json({ limit: '50mb' }));
+// app.use(express.json({ limit: '50mb' }));
+
+// Configuración para aumentar el límite del tamaño del cuerpo de la solicitud
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 /*
   #############################
