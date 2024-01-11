@@ -29,8 +29,8 @@ app.use(express.static('static'));
 // app.use(express.json({ limit: '50mb' }));
 
 // Configuración para aumentar el límite del tamaño del cuerpo de la solicitud
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.json({ limit: '500mb' }));
+app.use(bodyParser.urlencoded({ limit: '500mb', extended: true }));
 
 /*
   #############################
