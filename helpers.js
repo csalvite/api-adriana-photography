@@ -5,7 +5,7 @@ const sharp = require('sharp');
 const uuid = require('uuid');
 const crypto = require('crypto');
 
-const { UPLOADS_DIRECTORY } = process.env;
+const { CITA_DOBLE_STATIC } = process.env;
 
 // Funcion que crea un nuevo error
 function generateError(message, code) {
@@ -43,6 +43,31 @@ async function savePhoto(image, collection) {
     ensureDir(imageDirectory);
 
     const saveDirectory = path.join(imageDirectory, imageName);
+
+    // Guardamos la imagen
+    await sharpImage.toFile(saveDirectory);
+
+    // Retornamos el nombre "encriptado" de la imagen para guardarlo en base de datos
+    return imageName;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Error al procesar la imagen');
+  }
+}
+
+// Funcion para insertar nuevas fotos
+async function saveCitaDoblePhoto(image) {
+  try {
+    // Comprobamos que el directorio static existe
+    const staticDir = path.join(__dirname, CITA_DOBLE_STATIC);
+
+    // Convertimos la imagen en un objeto sharp
+    const sharpImage = sharp(image.data);
+
+    // Generamos un nombre único para la imagen
+    const imageName = uuid.v4() + '.jpg';
+
+    const saveDirectory = path.join(staticDir, imageName);
 
     // Guardamos la imagen
     await sharpImage.toFile(saveDirectory);
@@ -99,4 +124,5 @@ module.exports = {
   savePhoto,
   savePhotoVideoBackground,
   generateRandomString,
+  saveCitaDoblePhoto,
 };

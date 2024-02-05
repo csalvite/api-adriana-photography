@@ -12,6 +12,7 @@ async function main() {
     await connection.query('DROP TABLE IF EXISTS videophotos');
     await connection.query('DROP TABLE IF EXISTS videos');
     await connection.query('DROP TABLE IF EXISTS user');
+    await connection.query('DROP TABLE IF EXISTS citaDoble');
     console.log('Tablas eliminadas...');
 
     // Creamos las tablas
@@ -60,6 +61,14 @@ async function main() {
         password VARCHAR(255) NOT NULL,
         registrationCode VARCHAR(100),
         createdAt DATETIME NOT NULL
+      )`
+    );
+
+    // Tabla para las imagenes de cita doble para otra web
+    await connection.query(
+      `CREATE TABLE IF NOT EXISTS citaDoble (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        name VARCHAR(255) NOT NULL
       )`
     );
 

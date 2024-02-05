@@ -46,6 +46,8 @@ const {
   loginUser,
   newUser,
   GetCategories,
+  SaveCitaDoblePhotos,
+  GetCitaDoblePhotos,
 } = require('./controllers');
 
 const isAuth = require('./middlewares/isAuth');
@@ -83,6 +85,16 @@ app.post('/videos', isAuth, SaveVideo);
 
 // Obtiene todos los videos
 app.get('/videos', GetVideosController);
+
+/*
+  ###########################
+  ### Cosas de Cita Doble ###
+  ###########################
+*/
+
+app.post('/cita-doble', SaveCitaDoblePhotos);
+
+app.get('/cita-doble', GetCitaDoblePhotos);
 
 /*
   #####################################

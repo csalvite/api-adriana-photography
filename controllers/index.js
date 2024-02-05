@@ -1,3 +1,5 @@
+const GetCitaDoblePhotos = require('./CitaDoble/GetCitaDoblePhotos');
+const SaveCitaDoblePhotos = require('./CitaDoble/SaveCitaDoblePhotos');
 const GetCategories = require('./GetCategories');
 const GetPhotosController = require('./GetPhotosController');
 const GetVideosController = require('./GetVideosController');
@@ -14,4 +16,6 @@ module.exports = {
   loginUser,
   newUser,
   GetCategories,
+  SaveCitaDoblePhotos,
+  GetCitaDoblePhotos,
 };
