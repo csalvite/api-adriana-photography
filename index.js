@@ -24,6 +24,7 @@ app.use(morgan('dev'));
 app.use(fileUpload());
 
 app.use(express.static('static'));
+app.use(express.static('static_cita_doble'));
 
 // Configurar el límite de carga del cuerpo a 50 megabytes
 // app.use(express.json({ limit: '50mb' }));
