@@ -49,6 +49,8 @@ const {
   GetCategories,
   SaveCitaDoblePhotos,
   GetCitaDoblePhotos,
+  SaveStills,
+  GetStills,
 } = require('./controllers');
 
 const isAuth = require('./middlewares/isAuth');
@@ -86,6 +88,12 @@ app.post('/videos', isAuth, SaveVideo);
 
 // Obtiene todos los videos
 app.get('/videos', GetVideosController);
+
+// Guardamos fotos stills
+app.post('/stills', SaveStills);
+
+// Guardamos fotos stills
+app.get('/stills', GetStills);
 
 /*
   ###########################

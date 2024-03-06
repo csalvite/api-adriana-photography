@@ -36,6 +36,13 @@ async function main() {
     );
 
     await connection.query(
+      `CREATE TABLE IF NOT EXISTS stills(
+          id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+          name VARCHAR(255) NOT NULL
+      )`
+    );
+
+    await connection.query(
       `CREATE TABLE IF NOT EXISTS videos (
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         urlVideo VARCHAR(255) NOT NULL,
