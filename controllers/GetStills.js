@@ -6,16 +6,13 @@ const GetStills = async (req, res, next) => {
   try {
     connection = await getDB();
 
-    const result = [];
-
     const [photos] = await connection.query(`select * from stills`);
     //result[collection.collection] = photos;
-    result.push(photos);
 
     res.send({
       status: 'Ok',
       message: 'Stills results:',
-      data: result,
+      data: photos,
     });
   } catch (error) {
     next(error);
